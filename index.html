@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://ux.ed.team/css/styles.css?201803301710">
-    <link rel="stylesheet" href="./styles.css">
-    <title>Proyecto Final POO - JavaScript</title>
+    <link rel="stylesheet" href="./assets/styles.css">
+    <title>Proyecto POO - JavaScript</title>
 </head>
 <body>
     <div class="ed-grid">
-        <h1>Cursos</h1>
+        <h1>EDCursos</h1>
 
         <div class="tabs">
-            <div class="tab active" data-view="vista-cursos">📘 Cursos</div>
-            <div class="tab" data-view="vista-profesores">👨‍🏫 Profesores</div>
-            <div class="tab" data-view="vista-alumnos">👨‍🎓 Alumnos</div>
+            <div class="tab active" data-view="vista-cursos"><img src="./assets/images/icon_curso.png" width="20" height="20"> Cursos</div>
+            <div class="tab" data-view="vista-profesores"><img src="./assets/images/icon_profesor.png" width="20" height="20"> Profesores</div>
+            <div class="tab" data-view="vista-alumnos"><img src="./assets/images/icon_alumno.png" width="20" height="20"> Alumnos</div>
         </div>
     </div>
 
@@ -88,27 +88,45 @@
                 </div>
             </form>
 
-            <h3 class="s-mt-4">Asignar Profesor a Curso</h3>
+            <div class="ed-grid m-grid-2 gap-2 s-mt-4">
 
-            <div class="assign-box">
-                <div class="form-item">
-                    <label>Profesor
-                        <select id="selectProfesor"></select>
-                    </label>
+                <div>
+                    <h3>Asignar Profesor a Curso</h3>
+                    <div class="assign-box">
+                        <div class="form-item">
+                            <label>Profesor
+                                <select id="selectProfesor"></select>
+                            </label>
+                        </div>
+
+                        <div class="form-item">
+                            <label>Curso
+                                <select id="selectCursoProfesor"></select>
+                            </label>
+                        </div>
+
+                        <div class="form-item">
+                            <button id="btnAsignarProfesor" class="button full">Asignar</button>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-item">
-                    <label>Curso
-                        <select id="selectCursoProfesor"></select>
-                    </label>
-                </div>
-
-                <div class="form-item assign-btn">
-                    <button id="btnAsignarProfesor" class="button full">Asignar</button>
+                <div>
+                    <h3>Profesores Registrados</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Correo</th>
+                                <th>Calificación</th>
+                                <th>Activo</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaProfesores"></tbody>
+                    </table>
                 </div>
             </div>
-
-            <ul id="listaProfesores" class="s-mt-4"></ul>
         </div>
     </section>
 
@@ -143,27 +161,45 @@
                 </div>
             </form>
 
-            <h3 class="s-mt-4">Inscribir Alumno en Curso</h3>
+            <div class="ed-grid m-grid-2 gap-2 s-mt-4">
 
-            <div class="assign-box">
-                <div class="form-item">
-                    <label>Alumno
-                        <select id="selectAlumno"></select>
-                    </label>
+                <div>
+                    <h3>Inscribir Alumno en Curso</h3>
+                    <div class="assign-box">
+                        <div class="form-item">
+                            <label>Alumno
+                                <select id="selectAlumno"></select>
+                            </label>
+                        </div>
+
+                        <div class="form-item">
+                            <label>Curso
+                                <select id="selectCursoAlumno"></select>
+                            </label>
+                        </div>
+
+                        <div class="form-item">
+                            <button id="btnInscribirAlumno" class="button full">Inscribir</button>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-item">
-                    <label>Curso
-                        <select id="selectCursoAlumno"></select>
-                    </label>
+                <div>
+                    <h3>Alumnos Registrados</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Correo</th>                                
+                                <th>Activo</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaAlumnos"></tbody>
+                    </table>
                 </div>
 
-                <div class="form-item assign-btn">
-                    <button id="btnInscribirAlumno" class="button full">Inscribir</button>
-                </div>
             </div>
-
-            <ul id="listaAlumnos" class="s-mt-4"></ul>
         </div>
     </section>
 
