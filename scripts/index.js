@@ -26,7 +26,7 @@ function correoExiste(correo) {
 }
 
 function estado(activo) {
-    return activo ? "🟢 Activo" : "🔴 Inactivo"
+    return activo ? "✔️ Activo" : "❌ Inactivo"
 }
 
 // LOCAL STORAGE
@@ -111,12 +111,18 @@ formCursos.addEventListener("submit", e => {
 
 // PROFESORES
 const formProfesor = document.getElementById("formProfesor")
-const listaProfesores = document.getElementById("listaProfesores")
+const tablaProfesores = document.getElementById("tablaProfesores")
 
-function renderProfesor(p) {
-    const li = document.createElement("li")
-    li.innerHTML = `<strong>${p.nombres} ${p.apellidos}</strong> ⭐ ${p.calificacion} (${estado(p.activo)})`
-    listaProfesores.appendChild(li)
+function renderProfesor(profesor) {
+    tablaProfesores.innerHTML += `
+    <tr>
+        <td>${profesor.nombres}</td>
+        <td>${profesor.apellidos}</td>
+        <td>${profesor.correo}</td>
+        <td>${profesor.calificacion} ⭐</td>
+        <td>${estado(profesor.activo)}</td>
+    </tr>
+    `
 }
 
 formProfesor.addEventListener("submit", e => {
@@ -139,12 +145,17 @@ formProfesor.addEventListener("submit", e => {
 
 // ALUMNOS
 const formAlumno = document.getElementById("formAlumno")
-const listaAlumnos = document.getElementById("listaAlumnos")
+const tablaAlumnos = document.getElementById("tablaAlumnos")
 
-function renderAlumno(a) {
-    const li = document.createElement("li")
-    li.innerHTML = `<strong>${a.nombres} ${a.apellidos}</strong> (${estado(a.activo)})`
-    listaAlumnos.appendChild(li)
+function renderAlumno(alumno) {    
+    tablaAlumnos.innerHTML += `
+    <tr>
+        <td>${alumno.nombres}</td>
+        <td>${alumno.apellidos}</td>
+        <td>${alumno.correo}</td>
+        <td>${estado(alumno.activo)}</td>
+    </tr>
+    `
 }
 
 formAlumno.addEventListener("submit", e => {
