@@ -2,15 +2,21 @@ import Curso from "./classes/Curso.js"
 import Profesor from "./classes/Profesor.js"
 import Alumno from "./classes/Alumno.js"
 
-const elem = document.getElementById("cursos")
+const cursos = []
+const profesores = []
+const alumnos = []
+
+// CURSOS
+const contenedorCursos = document.getElementById("cursos")
+const formCursos = document.getElementById("formCursos")
 
 // Imprime un curso en el DOM
 // Recibe un objeto de tipo Curso
 function mostrarCurso(curso) {
-    const hijo = document.createElement("div")
-    hijo.classList.add("card")
+    const card = document.createElement("div")
+    card.classList.add("card")
 
-    hijo.innerHTML = `
+    card.innerHTML = `
         <div class="img-container s-ratio-16-9 s-radius-tr s-radius-tl">
             <img src="${curso.getPoster()}" alt="${curso.getNombre()}" />
         </div>
@@ -21,29 +27,87 @@ function mostrarCurso(curso) {
             </div>
         </div>
     `
-    elem.appendChild(hijo)
+    contenedorCursos.appendChild(card)
 }
 
-const formulario = document.getElementById("formCursos")
-
-formulario.addEventListener("submit", e => {
+formCursos.addEventListener("submit", e => {
     e.preventDefault()
 
-    const target = e.target
-    const curso = new Curso(target.nombreCurso.value, target.posterCurso.value, target.clasesCurso.value)
+    const data = e.target
+    const curso = new Curso(data.nombreCurso.value, data.posterCurso.value, data.clasesCurso.value)
+
+    cursos.push(curso)
 
     // Mostrar el curso
     mostrarCurso(curso)
 
     // Limpiar los inputs del formulario
-    formulario.reset()
+    formCursos.reset()
 })
 
-const profesor1 = new Profesor("Juan", "Pérez", "juan@ed.team", true, ["React", "JavaScript"], 10)
+// USUARIOS
+const tipoUsuario = document.getElementById("tipoUsuario")
+const formUsuarios = document.getElementById("formUsuarios")
+const listaProfesores = document.getElementById("listaProfesores")
+const listaAlumnos = document.getElementById("listaAlumnos")
+const camposProfesor = document.querySelectorAll(".solo-profesor")
 
-const alumno1 = new Alumno("María", "Gómez", "maria@ed.team", false, ["React", "JavaScript"])
-const alumno2 = new Alumno("Pedro", "López", "pedro@ed.team", true, ["React", "JavaScript"])
+tipoUsuario.addEventListener("change", e => {
+    camposProfesor.forEach(campo => {
+        campo.classList.toggle("s-none", tipoUsuario.value !== "profesor")
+    })
+})
 
-const cursoJS = new Curso("JavaScript", "https://edteam-media.s3.amazonaws.com/courses/original/7e1a6d6b-4f7e-4f1f-9275-6d1f5b8e3f12.jpg", 20)
+formUsuarios.addEventListener("submit", e => {
+    e.preventDefault()
 
-cursoJS.setInscritos([...cursoJS.getInscritos(), alumno1])
+    if (tipoUsuario.value) {
+        alert("Seleccione un tipo de usuario")
+        return
+    }
+
+    const data = e.target
+
+    if (tipoUsuario.value === "profesor") {
+        const profesor = new Profesor(
+            data.nombres.value,
+            data.apellidos.value,
+            data.correo.value,
+            data.activo.checked,
+            [],
+            data.calificacion.value
+        )
+
+        profesores.push(profesor)
+        renderProfesor(profesor)
+    }
+
+    if (tipoUsuario.value === "alumno") {
+        const alumno = new Alumno(
+            data.nombres.value,
+            data.apellidos.value,
+            data.correo.value,
+            data.activo.checked,
+            []
+        )
+
+        alumnos.push(alumno)
+        renderAlumno(alumno)
+    }
+
+    formUsuarios.reset()
+    tipoUsuario.value = ""
+})
+
+// Renderizado de usuarios
+function renderProfesor(profesor) {
+    const li = document.createElement("li")
+    li.textContent = `${profesor.nombres} ${profesor.apellidos} ⭐ ${profesor.calificacion}`
+    listaProfesores.appendChild(li)
+}
+
+function renderAlumno(alumno) {
+    const li = document.createElement("li")
+    li.textContent = `${alumno.nombres} ${alumno.apellidos}`
+    listaAlumnos.appendChild(li)
+}
