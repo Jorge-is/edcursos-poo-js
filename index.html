@@ -9,6 +9,8 @@
 <body>
     <div class="ed-grid">
         <h1>Cursos EDteam</h1>
+
+        <!-- FORMULARIO DE CURSOS -->
         <form id="formCursos">
             <div class="ed-grid m-grid-4">
                 <div class="form-item">
@@ -35,8 +37,80 @@
             </div>
         </form>
     </div>
-    <div class="ed-grid m-grid-4 s-grid-2 row-gap" id="cursos">
+
+    <!-- LISTADO DE CURSOS -->
+    <div class="ed-grid m-grid-4 s-grid-2 row-gap s-mt-4" id="cursos"></div>
+
+    <!-- FORMULARIO DE USUARIOS -->
+    <div class="ed-grid s-mt-4">
+        <h2>Registro de Usuarios</h2>
+
+        <!-- Selector de tipo de usuario -->
+        <div class="form-item">
+            <label>
+                Tipo de Usuario
+                <select id="tipoUsuario">
+                    <option value="">Seleccione</option>
+                    <option value="profesor">Profesor</option>
+                    <option value="alumno">Alumno</option>
+                </select>
+            </label>
+        </div>
+
+        <!-- Formulario de usuario -->
+        <form id="formUsuarios" class="s-mt-3">
+            <div class="ed-grid m-grid-3">
+                <div class="form-item">
+                    <label>Nombres
+                        <input type="text" name="nombres" required>
+                    </label>
+                </div>
+
+                <div class="form-item">
+                    <label>Apellidos
+                        <input type="text" name="apellidos" required>
+                    </label>
+                </div>
+
+                <div class="form-item">
+                    <label>Correo
+                        <input type="email" name="correo" required>
+                    </label>
+                </div>
+
+                <div class="form-item">
+                    <label>
+                        <input type="checkbox" name="activo"> Activo
+                    </label>
+                </div>
+
+                <!-- SOLO PROFESOR -->
+                <div class="form-item solo-profesor s-none">
+                    <label>Calificación
+                        <input type="number" min="1" max="10" name="calificacion">
+                    </label>
+                </div>
+
+                <div class="form-item m-py-3">
+                    <input class="button" type="submit" value="Registrar Usuario">
+                </div>
+            </div>
+        </form>
     </div>
+
+    <!-- Listados -->
+    <div class="ed-grid m-grid-2 s-mt-4">
+        <div>
+            <h3>👨‍🏫 Profesores</h3>
+            <ul id="listaProfesores"></ul>
+        </div>
+
+        <div>
+            <h3>👨‍🎓 Alumnos</h3>
+            <ul id="listaAlumnos"></ul>
+        </div>
+    </div>
+    
     <script type="module" src="./scripts/index.js"></script>
 </body>
 </html>
