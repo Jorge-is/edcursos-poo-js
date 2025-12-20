@@ -89,9 +89,24 @@
             </form>
 
             <h3 class="s-mt-4">Asignar Profesor a Curso</h3>
-            <select id="selectProfesor"></select>
-            <select id="selectCursoProfesor"></select>
-            <button id="btnAsignarProfesor" class="button s-mt-2">Asignar</button>
+
+            <div class="assign-box">
+                <div class="form-item">
+                    <label>Profesor
+                        <select id="selectProfesor"></select>
+                    </label>
+                </div>
+
+                <div class="form-item">
+                    <label>Curso
+                        <select id="selectCursoProfesor"></select>
+                    </label>
+                </div>
+
+                <div class="form-item assign-btn">
+                    <button id="btnAsignarProfesor" class="button full">Asignar</button>
+                </div>
+            </div>
 
             <ul id="listaProfesores" class="s-mt-4"></ul>
         </div>
@@ -129,9 +144,24 @@
             </form>
 
             <h3 class="s-mt-4">Inscribir Alumno en Curso</h3>
-            <select id="selectAlumno"></select>
-            <select id="selectCursoAlumno"></select>
-            <button id="btnInscribirAlumno" class="button s-mt-2">Inscribir</button>
+
+            <div class="assign-box">
+                <div class="form-item">
+                    <label>Alumno
+                        <select id="selectAlumno"></select>
+                    </label>
+                </div>
+
+                <div class="form-item">
+                    <label>Curso
+                        <select id="selectCursoAlumno"></select>
+                    </label>
+                </div>
+
+                <div class="form-item assign-btn">
+                    <button id="btnInscribirAlumno" class="button full">Inscribir</button>
+                </div>
+            </div>
 
             <ul id="listaAlumnos" class="s-mt-4"></ul>
         </div>

@@ -25,7 +25,7 @@ function correoExiste(correo) {
     return [...profesores, ...alumnos].some(u => u.correo === correo)
 }
 
-function estadoActivo(activo) {
+function estado(activo) {
     return activo ? "🟢 Activo" : "🔴 Inactivo"
 }
 
@@ -74,16 +74,18 @@ const formCursos = document.getElementById("formCursos")
 // Recibe un objeto de tipo Curso
 function mostrarCurso(curso) {
     const card = document.createElement("div")
-    card.classList.add("card s-radius s-shadow")
+    card.classList.add("card")
 
     card.innerHTML = `
-        <div class="img-container s-ratio-16-9">
+        <div class="img-container s-ratio-16-9 s-radius-tr s-radius-tl">
             <img src="${curso.getPoster()}" alt="${curso.getNombre()}">
         </div>
-        <div class="card__data s-pxy-2">
-            <h3 class="t5">${curso.getNombre()}</h3>
-            <span class="badge s-bg-blue s-mr-1">${curso.getClases()} clases</span>
-            <span class="badge s-bg-green">${curso.getInscritos().length} inscritos</span>
+        <div class="card__data s-border s-radius-br s-radius-bl s-pxy-2">
+            <h3 class="t5 s-mb-0 s-center">${curso.getNombre()}</h3>
+            <div class="s-center">
+                <span class="badge">📚 ${curso.getClases()} clases</span>
+                <span class="badge">👥 ${curso.getInscritos().length} inscritos</span>
+            </div>
         </div>
     `
     contenedorCursos.appendChild(card)
@@ -119,18 +121,20 @@ function renderProfesor(p) {
 
 formProfesor.addEventListener("submit", e => {
     e.preventDefault()
-    const d = e.target
-    if (correoExiste(d.correo.value)) return alert("Correo ya registrado")
+    const data = e.target
+    if (correoExiste(data.correo.value)) return alert("Correo ya registrado")
 
-    const p = new Profesor(
-        d.nombres.value, d.apellidos.value, d.correo.value,
-        d.activo.checked, [], d.calificacion.value
+    const profesor = new Profesor(
+        data.nombres.value, data.apellidos.value, data.correo.value,
+        data.activo.checked, [], data.calificacion.value
     )
-    profesores.push(p)
-    renderProfesor(p)
+    profesores.push(profesor)
+    renderProfesor(profesor)
+
     guardarStorage()
     cargarSelectores()
-    d.reset()
+
+    formProfesor.reset()
 })
 
 // ALUMNOS
@@ -145,18 +149,19 @@ function renderAlumno(a) {
 
 formAlumno.addEventListener("submit", e => {
     e.preventDefault()
-    const d = e.target
-    if (correoExiste(d.correo.value)) return alert("Correo ya registrado")
+    const data = e.target
+    if (correoExiste(data.correo.value)) return alert("Correo ya registrado")
 
-    const a = new Alumno(
-        d.nombres.value, d.apellidos.value, d.correo.value,
-        d.activo.checked, []
+    const alumno = new Alumno(
+        data.nombres.value, data.apellidos.value, data.correo.value,
+        data.activo.checked, []
     )
-    alumnos.push(a)
-    renderAlumno(a)
+    alumnos.push(alumno)
+    renderAlumno(alumno)
+    
     guardarStorage()
     cargarSelectores()
-    d.reset()
+    formAlumno.reset()
 })
 
 // ASIGNAR CURSOS
