@@ -82,6 +82,19 @@ El proyecto sigue principios de **POO**:
 
 ---
 
+## 📸 Capturas 
+
+### 📘 Vista Cursos
+<img width="1621" height="919" alt="image" src="https://github.com/user-attachments/assets/0324e6d5-1e9b-48ae-ac98-eeab368f863f" />
+
+### 👨‍🏫 Vista Profesores
+<img width="1370" height="744" alt="image" src="https://github.com/user-attachments/assets/52bc917f-5c34-4d20-a715-5ad2bbb44b31" />
+
+### 👨‍🎓 Vista Alumnos
+<img width="1373" height="696" alt="image" src="https://github.com/user-attachments/assets/61031485-d88e-40b4-89ed-484b2a45641d" />
+
+---
+
 ## 📦 Instalación y Uso
 
 1. Clona el repositorio:
