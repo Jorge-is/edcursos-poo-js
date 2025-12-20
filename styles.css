@@ -1,0 +1,30 @@
+body {
+    background: #f4f6fb;
+}
+
+.tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.tab {
+    padding: .6rem 1.2rem;
+    border-radius: 6px;
+    background: #e6e9f0;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.tab.active {
+    background: #0052cc;
+    color: white;
+}
+
+.view {
+    display: none;
+}
+
+.view.active {
+    display: block;
+}

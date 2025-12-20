@@ -2,9 +2,69 @@ import Curso from "./classes/Curso.js"
 import Profesor from "./classes/Profesor.js"
 import Alumno from "./classes/Alumno.js"
 
+// TABS
+const tabs = document.querySelectorAll(".tab")
+const views = document.querySelectorAll(".view")
+
+tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+        tabs.forEach(t => t.classList.remove("active"))
+        views.forEach(v => v.classList.remove("active"))
+        tab.classList.add("active")
+        document.getElementById(tab.dataset.view).classList.add("active")
+    })
+})
+
+// Listas de datos
 const cursos = []
 const profesores = []
 const alumnos = []
+
+// HELPERS
+function correoExiste(correo) {
+    return [...profesores, ...alumnos].some(u => u.correo === correo)
+}
+
+function estadoActivo(activo) {
+    return activo ? "🟢 Activo" : "🔴 Inactivo"
+}
+
+// LOCAL STORAGE
+function guardarStorage() {
+    localStorage.setItem("cursos", JSON.stringify(cursos))
+    localStorage.setItem("profesores", JSON.stringify(profesores))
+    localStorage.setItem("alumnos", JSON.stringify(alumnos))
+}
+
+function cargarStorage() {
+
+    JSON.parse(localStorage.getItem("cursos") || "[]").forEach(c => {
+        const curso = new Curso(c.nombre, c.poster, c.clases)
+        curso.setInscritos(c.inscritos || [])
+        cursos.push(curso)
+        mostrarCurso(curso)
+    })
+
+    JSON.parse(localStorage.getItem("profesores") || "[]").forEach(p => {
+        const profesor = new Profesor(
+            p.nombres, p.apellidos, p.correo, p.activo,
+            p.cursosDictados || [], p.calificacion
+        )
+        profesores.push(profesor)
+        renderProfesor(profesor)
+    })
+
+    JSON.parse(localStorage.getItem("alumnos") || "[]").forEach(a => {
+        const alumno = new Alumno(
+            a.nombres, a.apellidos, a.correo, a.activo,
+            a.cursosInscritos || []
+        )
+        alumnos.push(alumno)
+        renderAlumno(alumno)
+    })
+
+    cargarSelectores()
+}
 
 // CURSOS
 const contenedorCursos = document.getElementById("cursos")
@@ -14,17 +74,16 @@ const formCursos = document.getElementById("formCursos")
 // Recibe un objeto de tipo Curso
 function mostrarCurso(curso) {
     const card = document.createElement("div")
-    card.classList.add("card")
+    card.classList.add("card s-radius s-shadow")
 
     card.innerHTML = `
-        <div class="img-container s-ratio-16-9 s-radius-tr s-radius-tl">
-            <img src="${curso.getPoster()}" alt="${curso.getNombre()}" />
+        <div class="img-container s-ratio-16-9">
+            <img src="${curso.getPoster()}" alt="${curso.getNombre()}">
         </div>
-        <div class="card__data s-border s-radius-br s-radius-bl s-pxy-2">
-            <h3 class="t5 s-mb-2 s-center">${curso.getNombre()}</h3>
-            <div class="s-center">
-                <span class="small">Cantidad de clases: ${curso.getClases()}</span>
-            </div>
+        <div class="card__data s-pxy-2">
+            <h3 class="t5">${curso.getNombre()}</h3>
+            <span class="badge s-bg-blue s-mr-1">${curso.getClases()} clases</span>
+            <span class="badge s-bg-green">${curso.getInscritos().length} inscritos</span>
         </div>
     `
     contenedorCursos.appendChild(card)
@@ -41,73 +100,105 @@ formCursos.addEventListener("submit", e => {
     // Mostrar el curso
     mostrarCurso(curso)
 
+    guardarStorage()
+    cargarSelectores()
+
     // Limpiar los inputs del formulario
     formCursos.reset()
 })
 
-// USUARIOS
-const tipoUsuario = document.getElementById("tipoUsuario")
-const formUsuarios = document.getElementById("formUsuarios")
+// PROFESORES
+const formProfesor = document.getElementById("formProfesor")
 const listaProfesores = document.getElementById("listaProfesores")
-const listaAlumnos = document.getElementById("listaAlumnos")
-const camposProfesor = document.querySelectorAll(".solo-profesor")
 
-tipoUsuario.addEventListener("change", e => {
-    camposProfesor.forEach(campo => {
-        campo.classList.toggle("s-none", tipoUsuario.value !== "profesor")
-    })
-})
-
-formUsuarios.addEventListener("submit", e => {
-    e.preventDefault()
-
-    if (tipoUsuario.value) {
-        alert("Seleccione un tipo de usuario")
-        return
-    }
-
-    const data = e.target
-
-    if (tipoUsuario.value === "profesor") {
-        const profesor = new Profesor(
-            data.nombres.value,
-            data.apellidos.value,
-            data.correo.value,
-            data.activo.checked,
-            [],
-            data.calificacion.value
-        )
-
-        profesores.push(profesor)
-        renderProfesor(profesor)
-    }
-
-    if (tipoUsuario.value === "alumno") {
-        const alumno = new Alumno(
-            data.nombres.value,
-            data.apellidos.value,
-            data.correo.value,
-            data.activo.checked,
-            []
-        )
-
-        alumnos.push(alumno)
-        renderAlumno(alumno)
-    }
-
-    formUsuarios.reset()
-    tipoUsuario.value = ""
-})
-
-// Renderizado de usuarios
-function renderProfesor(profesor) {
+function renderProfesor(p) {
     const li = document.createElement("li")
-    li.textContent = `${profesor.nombres} ${profesor.apellidos} ⭐ ${profesor.calificacion}`
+    li.innerHTML = `<strong>${p.nombres} ${p.apellidos}</strong> ⭐ ${p.calificacion} (${estado(p.activo)})`
     listaProfesores.appendChild(li)
 }
 
-function renderAlumno(alumno) {
+formProfesor.addEventListener("submit", e => {
+    e.preventDefault()
+    const d = e.target
+    if (correoExiste(d.correo.value)) return alert("Correo ya registrado")
+
+    const p = new Profesor(
+        d.nombres.value, d.apellidos.value, d.correo.value,
+        d.activo.checked, [], d.calificacion.value
+    )
+    profesores.push(p)
+    renderProfesor(p)
+    guardarStorage()
+    cargarSelectores()
+    d.reset()
+})
+
+// ALUMNOS
+const formAlumno = document.getElementById("formAlumno")
+const listaAlumnos = document.getElementById("listaAlumnos")
+
+function renderAlumno(a) {
     const li = document.createElement("li")
-    li.textContent = `${alumno.nombres} ${alumno.apellidos}`
+    li.innerHTML = `<strong>${a.nombres} ${a.apellidos}</strong> (${estado(a.activo)})`
     listaAlumnos.appendChild(li)
 }
+
+formAlumno.addEventListener("submit", e => {
+    e.preventDefault()
+    const d = e.target
+    if (correoExiste(d.correo.value)) return alert("Correo ya registrado")
+
+    const a = new Alumno(
+        d.nombres.value, d.apellidos.value, d.correo.value,
+        d.activo.checked, []
+    )
+    alumnos.push(a)
+    renderAlumno(a)
+    guardarStorage()
+    cargarSelectores()
+    d.reset()
+})
+
+// ASIGNAR CURSOS
+const selectProfesor = document.getElementById("selectProfesor")
+const selectAlumno = document.getElementById("selectAlumno")
+const selectCursoProfesor = document.getElementById("selectCursoProfesor")
+const selectCursoAlumno = document.getElementById("selectCursoAlumno")
+
+const btnAsignarProfesor = document.getElementById("btnAsignarProfesor")
+const btnInscribirAlumno = document.getElementById("btnInscribirAlumno")
+
+function cargarSelectores() {
+    selectProfesor.innerHTML = profesores.map((p, i) =>
+        `<option value="${i}">${p.nombres} ${p.apellidos}</option>`).join("")
+
+    selectAlumno.innerHTML = alumnos.map((a, i) =>
+        `<option value="${i}">${a.nombres} ${a.apellidos}</option>`).join("")
+
+    selectCursoProfesor.innerHTML = cursos.map((c, i) =>
+        `<option value="${i}">${c.getNombre()}</option>`).join("")
+
+    selectCursoAlumno.innerHTML = selectCursoProfesor.innerHTML
+}
+
+btnAsignarProfesor.addEventListener("click", () => {
+    const profesor = profesores[selectProfesor.value]
+    const curso = cursos[selectCursoProfesor.value]
+    profesor.cursosDictados.push(curso.getNombre())
+    guardarStorage()
+    alert("Profesor asignado")
+})
+
+btnInscribirAlumno.addEventListener("click", () => {
+    const alumno = alumnos[selectAlumno.value]
+    const curso = cursos[selectCursoAlumno.value]
+
+    alumno.cursosInscritos.push(curso.getNombre())
+    curso.setInscritos([...curso.getInscritos(), alumno.correo])
+
+    guardarStorage()
+    alert("Alumno inscrito")
+})
+
+// INIT
+cargarStorage()

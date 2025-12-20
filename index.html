@@ -4,113 +4,139 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://ux.ed.team/css/styles.css?201803301710">
+    <link rel="stylesheet" href="./styles.css">
     <title>Proyecto Final POO - JavaScript</title>
 </head>
 <body>
     <div class="ed-grid">
-        <h1>Cursos EDteam</h1>
+        <h1>Cursos</h1>
 
-        <!-- FORMULARIO DE CURSOS -->
-        <form id="formCursos">
-            <div class="ed-grid m-grid-4">
-                <div class="form-item">
-                    <label>
-                        Nombre
-                        <input type="text" name="nombreCurso" required>
-                    </label>
-                </div>
-                <div class="form-item">
-                    <label>
-                        Poster
-                        <input type="text" name="posterCurso" required>
-                    </label>
-                </div>
-                <div class="form-item">
-                    <label>
-                        Clases
-                        <input type="number" min="1" name="clasesCurso" required>
-                    </label>
-                </div>
-                <div class="form-item m-py-3">
-                    <input class="button" type="submit" value="Crear Curso">
-                </div>
-            </div>
-        </form>
-    </div>
-
-    <!-- LISTADO DE CURSOS -->
-    <div class="ed-grid m-grid-4 s-grid-2 row-gap s-mt-4" id="cursos"></div>
-
-    <!-- FORMULARIO DE USUARIOS -->
-    <div class="ed-grid s-mt-4">
-        <h2>Registro de Usuarios</h2>
-
-        <!-- Selector de tipo de usuario -->
-        <div class="form-item">
-            <label>
-                Tipo de Usuario
-                <select id="tipoUsuario">
-                    <option value="">Seleccione</option>
-                    <option value="profesor">Profesor</option>
-                    <option value="alumno">Alumno</option>
-                </select>
-            </label>
-        </div>
-
-        <!-- Formulario de usuario -->
-        <form id="formUsuarios" class="s-mt-3">
-            <div class="ed-grid m-grid-3">
-                <div class="form-item">
-                    <label>Nombres
-                        <input type="text" name="nombres" required>
-                    </label>
-                </div>
-
-                <div class="form-item">
-                    <label>Apellidos
-                        <input type="text" name="apellidos" required>
-                    </label>
-                </div>
-
-                <div class="form-item">
-                    <label>Correo
-                        <input type="email" name="correo" required>
-                    </label>
-                </div>
-
-                <div class="form-item">
-                    <label>
-                        <input type="checkbox" name="activo"> Activo
-                    </label>
-                </div>
-
-                <!-- SOLO PROFESOR -->
-                <div class="form-item solo-profesor s-none">
-                    <label>Calificación
-                        <input type="number" min="1" max="10" name="calificacion">
-                    </label>
-                </div>
-
-                <div class="form-item m-py-3">
-                    <input class="button" type="submit" value="Registrar Usuario">
-                </div>
-            </div>
-        </form>
-    </div>
-
-    <!-- Listados -->
-    <div class="ed-grid m-grid-2 s-mt-4">
-        <div>
-            <h3>👨‍🏫 Profesores</h3>
-            <ul id="listaProfesores"></ul>
-        </div>
-
-        <div>
-            <h3>👨‍🎓 Alumnos</h3>
-            <ul id="listaAlumnos"></ul>
+        <div class="tabs">
+            <div class="tab active" data-view="vista-cursos">📘 Cursos</div>
+            <div class="tab" data-view="vista-profesores">👨‍🏫 Profesores</div>
+            <div class="tab" data-view="vista-alumnos">👨‍🎓 Alumnos</div>
         </div>
     </div>
-    
-    <script type="module" src="./scripts/index.js"></script>
+
+    <section id="vista-cursos" class="view active">
+        <div class="ed-grid">
+            <!-- FORMULARIO DE CURSOS -->
+            <form id="formCursos">
+                <div class="ed-grid m-grid-4">
+                    <div class="form-item">
+                        <label>
+                            Nombre
+                            <input type="text" name="nombreCurso" required>
+                        </label>
+                    </div>
+                    <div class="form-item">
+                        <label>
+                            Poster
+                            <input type="text" name="posterCurso" required>
+                        </label>
+                    </div>
+                    <div class="form-item">
+                        <label>
+                            Clases
+                            <input type="number" min="1" name="clasesCurso" required>
+                        </label>
+                    </div>
+                    <div class="form-item m-py-3">
+                        <button class="button">Crear Curso</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- LISTADO DE CURSOS -->
+        <div class="ed-grid m-grid-4 s-grid-2 row-gap s-mt-4" id="cursos"></div>
+    </section>
+
+    <!-- PROFESORES -->
+    <section id="vista-profesores" class="view">
+        <div class="ed-grid">
+            <form id="formProfesor">
+                <div class="ed-grid m-grid-4">
+                    <div class="form-item">
+                        <label>Nombres
+                            <input type="text" name="nombres" required>
+                        </label>
+                    </div>
+                    <div class="form-item">
+                        <label>Apellidos
+                            <input type="text" name="apellidos" required>
+                        </label>
+                    </div>
+                    <div class="form-item">
+                        <label>Correo
+                            <input type="email" name="correo" required>
+                        </label>
+                    </div>
+                    <div class="form-item">
+                        <label>Calificación
+                            <input type="number" min="1" max="10" name="calificacion" required>
+                        </label>
+                    </div>
+                    <div class="form-item">
+                        <label>
+                            <input type="checkbox" name="activo"> Activo
+                        </label>
+                    </div>
+                    <div class="form-item m-py-3">
+                        <button class="button">Registrar Profesor</button>
+                    </div>
+                </div>
+            </form>
+
+            <h3 class="s-mt-4">Asignar Profesor a Curso</h3>
+            <select id="selectProfesor"></select>
+            <select id="selectCursoProfesor"></select>
+            <button id="btnAsignarProfesor" class="button s-mt-2">Asignar</button>
+
+            <ul id="listaProfesores" class="s-mt-4"></ul>
+        </div>
+    </section>
+
+    <!-- ALUMNOS -->
+    <section id="vista-alumnos" class="view">
+        <div class="ed-grid">
+            <form id="formAlumno">
+                <div class="ed-grid m-grid-4">
+                    <div class="form-item">
+                        <label>Nombres
+                            <input type="text" name="nombres" required>
+                        </label>
+                    </div>
+                    <div class="form-item">
+                        <label>Apellidos
+                            <input type="text" name="apellidos" required>
+                        </label>
+                    </div>
+                    <div class="form-item">
+                        <label>Correo
+                            <input type="email" name="correo" required>
+                        </label>
+                    </div>
+                    <div class="form-item">
+                        <label>
+                            <input type="checkbox" name="activo"> Activo
+                        </label>
+                    </div>
+                    <div class="form-item m-py-3">
+                        <button class="button">Registrar Alumno</button>
+                    </div>
+                </div>
+            </form>
+
+            <h3 class="s-mt-4">Inscribir Alumno en Curso</h3>
+            <select id="selectAlumno"></select>
+            <select id="selectCursoAlumno"></select>
+            <button id="btnInscribirAlumno" class="button s-mt-2">Inscribir</button>
+
+            <ul id="listaAlumnos" class="s-mt-4"></ul>
+        </div>
+    </section>
+
+<script type="module" src="./scripts/index.js"></script>
 </body>
 </html>
