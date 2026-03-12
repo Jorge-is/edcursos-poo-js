@@ -99,12 +99,12 @@ El proyecto sigue principios de **POO**:
 
 1. Clona el repositorio:
 ```bash
-git clone https://github.com/Jorge-is/EDcursos-POO-JS.git
+git clone https://github.com/Jorge-is/edcursos-poo-js.git
 ```
 
 2. Ingresa al proyecto:
 ```bash
-cd EDcursos-POO-JS
+cd edcursos-poo-js
 ```
 
 3. Abre el archivo `index.html` en tu navegador:
